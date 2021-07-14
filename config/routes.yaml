@@ -1,3 +1,12 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+index:
+    path: /
+    controller: App\Controller\BlogController::index
+login:
+    path: /login
+    controller: App\Controller\BlogController::login
+signup:
+    path: /signup
+    controller: App\Controller\BlogController::signup
+admin:
+    path: /admin
+    controller: App\Controller\AdminController::homeAdmin
