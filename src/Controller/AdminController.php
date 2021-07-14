@@ -16,21 +16,21 @@ class AdminController extends AbstractController
         return $this->render('admin/index.html.twig');
     }
     /**
-     * @Route("/admin/create", name="create")
+     * @Route("/admin/create", name="createNews")
      */
     public function createNews(): Response
     {
         return $this->render('admin/index.html.twig');
     }
     /**
-     * @Route("/admin/edit/{id}", name="edit")
+     * @Route("/admin/edit/{id}", name="editNews")
      */
     public function editNews($id): Response
     {
         return $this->render('admin/index.html.twig');
     }
     /**
-     * @Route("/admin/delete/{id}", name="delete")
+     * @Route("/admin/delete/{id}", name="deleteNews")
      */
     public function deleteNews($id): Response
     {
