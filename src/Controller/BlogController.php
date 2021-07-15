@@ -27,7 +27,7 @@ class BlogController extends AbstractController
             ['publicationDate' => new \DateTime('now')]
         );
         return $this->render('blog/home.html.twig', [
-            'newsOfDay' => $newsOfDay
+            'news' => $newsOfDay
         ]);
     }
     /**
