@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\News;
+use Symfony\Component\Form\Form;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,7 +23,11 @@ class AdminController extends AbstractController
      */
     public function homeAdmin(): Response
     {
-        return $this->render('admin/index.html.twig');
+        $repo = $this->getDoctrine()->getRepository(News::class);
+        $news = $repo->findAll();
+        return $this->render('admin/index.html.twig', [
+            "news" => $news
+        ]);
     }
     /**
      * @Route("/admin/create", name="createNews")
