@@ -3,10 +3,17 @@
 namespace App\Controller;
 
 use App\Entity\News;
+use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class BlogController extends AbstractController
 {
@@ -37,15 +44,35 @@ class BlogController extends AbstractController
     /**
      *@Route("/login" , name="login" , methods= {"GET","POST"})
      */
-    public function login(): Response
+    public function login(User $news = null, Request $request, EntityManagerInterface $manager): Response
     {
         return $this->render('blog/login.html.twig');
     }
     /**
      * @Route("/signup" , name="signup" , methods= {"GET","POST"})
      */
-    public function signup(): Response
+    public function signup(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordHasher): Response
     {
-        return $this->render('blog/signup.html.twig');
+        $user = new User();
+
+        $form = $this->createFormBuilder($user)
+            ->add('username', TextType::class, ['label' => "Votre nom d'utilisateur"])
+            ->add('email', EmailType::class, ['label' => 'Email'])
+            ->add('password', PasswordType::class, ['label' => 'Mot de passe'])
+            ->add('submit', SubmitType::class, ['label' => "S'inscrire !"])
+            ->getForm();
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($user);
+            $manager->flush();
+            return $this->redirectToRoute('login');
+        }
+        return $this->render('blog/signup.html.twig', [
+            'form' => $form->createView(),
+        ]);
     }
 }

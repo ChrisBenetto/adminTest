@@ -2,14 +2,15 @@
 
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\UserRepository;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
  * @ORM\Table(name="`user`")
  */
-class User
+class User implements UserInterface
 {
     /**
      * @ORM\Id
@@ -89,5 +90,17 @@ class User
         $this->isAdmin = $isAdmin;
 
         return $this;
+    }
+    public function getUserIdentifier()
+    {
+    }
+    public function getRoles()
+    {
+    }
+    public function getSalt()
+    {
+    }
+    public function eraseCredentials()
+    {
     }
 }

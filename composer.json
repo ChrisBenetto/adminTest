@@ -20,6 +20,9 @@
         "symfony/framework-bundle": "5.3.*",
         "symfony/proxy-manager-bridge": "5.3.*",
         "symfony/runtime": "5.3.*",
+        "symfony/security-bundle": "5.3.*",
+        "symfony/security-core": "5.3.*",
+        "symfony/security-http": "5.3.*",
         "symfony/twig-bundle": "5.3.*",
         "symfony/validator": "5.3.*",
         "symfony/yaml": "5.3.*",
@@ -72,6 +75,8 @@
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.4",
-        "symfony/maker-bundle": "^1.33"
+        "symfony/maker-bundle": "^1.33",
+        "symfony/stopwatch": "^5.3",
+        "symfony/web-profiler-bundle": "^5.3"
     }
 }
