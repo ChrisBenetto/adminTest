@@ -19,7 +19,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class AdminController extends AbstractController
 {
     /**
-     * @Route("/admin", name="admin")
+     * @Route("/admin", name="admin",methods={"GET"})
      */
     public function homeAdmin(): Response
     {
@@ -30,19 +30,8 @@ class AdminController extends AbstractController
         ]);
     }
     /**
-     * @Route("/admin/{id}/show" , name="showNews")
-     */
-    public function showNews($id): Response
-    {
-        $repo = $this->getDoctrine()->getRepository(News::class);
-        $newsById = $repo->findBy($id);
-        return $this->render('admin/news.html.twig', [
-            "news" => $newsById
-        ]);
-    }
-    /**
-     * @Route("/admin/create", name="createNews")
-     * @Route("/admin/{id}/edit", name="editNews")
+     * @Route("/admin/create", name="createNews" , methods={"GET","POST"})
+     * @Route("/admin/{id}/edit", name="editNews", methods={"GET","PUT"})
      */
     public function form(News $news = null, Request $request, EntityManagerInterface $manager): Response
     {
@@ -57,7 +46,7 @@ class AdminController extends AbstractController
             ->add('publicationDate', DateType::class, ['label' => 'Date de publication'])
             ->add('publicationEnding', DateType::class, ['label' => 'Date de fin de publication'])
             /*->add('file', FileType::class, ['label' => 'Image de news']) */
-            ->add('submit', SubmitType::class, ['label' => 'Créer une news'])
+            ->add('submit', SubmitType::class, ['label' => 'Envoyez !'])
             ->getForm();
 
         $form->handleRequest($request);
@@ -79,10 +68,15 @@ class AdminController extends AbstractController
         ]);
     }
     /**
-     * @Route("/admin/delete/{id}", name="deleteNews")
+     * @Route("/admin/{id}/delete", name="deleteNews", methods={"DELETE"})
      */
-    public function deleteNews($id): Response
+    public function deleteNews($id, EntityManagerInterface $manager): Response
     {
-        return $this->render('admin/index.html.twig');
+        $repo = $this->getDoctrine()->getRepository(News::class);
+        $newsById = $repo->find($id);
+        $manager = $this->getDoctrine()->getManager();
+        $manager->remove($newsById);
+        $manager->flush();
+        return $this->redirectToRoute('admin');
     }
 }

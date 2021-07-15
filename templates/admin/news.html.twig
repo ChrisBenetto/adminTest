@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="example-wrapper">
+			<h1>Article
+				{{ news.title}}
+			</h1>
+			<p>
+				{{ news.content }}
+			</p>
+
+		</div>
+	</div>
+{% endblock %}

@@ -1,12 +1,15 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
-	Création d'une actualité
+	{% if (editMode) %}
+		Modification d'une actualité
+	{% else %}
+		Création d'une actualité
+	{% endif %}
 {% endblock %}
 
 {% block body %}
 	<div class="container">
 		{{ form(form) }}
-
 		</div>
 	{% endblock %}

@@ -2,4 +2,28 @@
 
 {% block body %}
 	<h1>Découvrer nos actualités du jour</h1>
+	<div class="row">
+		{% for news in newsOfDay %}
+
+			<div class="card col-3 mb-3">
+				<div class="card-body">
+					<a href="/news/{{ news.id }}">
+						<h5 class="card-title">{{ news.title }}</h5>
+					</a>
+					<h6 class="card-subtitle text-muted">{{news.slug}}</h6>
+				</div>
+				<svg xmlns="http://placehold.it" class="d-block user-select-none" width="100%" height="200" aria-label="Image de l'actualité" focusable="false" role="img" preserveaspectratio="xMidYMid slice" viewbox="0 0 318 180" style="font-size:1.125rem;text-anchor:middle">
+					<rect width="100%" height="100%" fill="#868e96"></rect>
+					<text x="50%" y="50%" fill="#dee2e6" dy=".3em">Image de l'actualité</text>
+				</svg>
+				<div class="card-footer text-muted">
+					<p>
+						Publié le :
+						{{ news.publicationDate | date('d/m/Y') }}
+					</p>
+				</div>
+			</div>
+
+		{% endfor %}
+	</div>
 {% endblock %}
