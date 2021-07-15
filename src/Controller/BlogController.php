@@ -44,9 +44,20 @@ class BlogController extends AbstractController
     /**
      *@Route("/login" , name="login" , methods= {"GET","POST"})
      */
-    public function login(User $news = null, Request $request, EntityManagerInterface $manager): Response
+    public function login(Request $request): Response
     {
-        return $this->render('blog/login.html.twig');
+        $user = new User();
+
+        $form = $this->createFormBuilder($user)
+            ->add('email', EmailType::class, ['label' => 'Email'])
+            ->add('password', PasswordType::class, ['label' => 'Mot de passe'])
+            ->add('submit', SubmitType::class, ['label' => "S'inscrire !"])
+            ->getForm();
+
+        $form->handleRequest($request);
+        return $this->render('blog/login.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
     /**
      * @Route("/signup" , name="signup" , methods= {"GET","POST"})
@@ -65,7 +76,7 @@ class BlogController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+            $user->setIsAdmin(false);
             $manager = $this->getDoctrine()->getManager();
             $manager->persist($user);
             $manager->flush();
