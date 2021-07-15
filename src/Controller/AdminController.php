@@ -30,6 +30,17 @@ class AdminController extends AbstractController
         ]);
     }
     /**
+     * @Route("/admin/{id}/show" , name="showNews")
+     */
+    public function showNews($id): Response
+    {
+        $repo = $this->getDoctrine()->getRepository(News::class);
+        $newsById = $repo->findBy($id);
+        return $this->render('admin/news.html.twig', [
+            "news" => $newsById
+        ]);
+    }
+    /**
      * @Route("/admin/create", name="createNews")
      * @Route("/admin/{id}/edit", name="editNews")
      */
@@ -58,9 +69,9 @@ class AdminController extends AbstractController
                 $news->setUpdateAt(new \DateTime());
             }
             $manager = $this->getDoctrine()->getManager();
-            $manager->persist($form);
+            $manager->persist($news);
             $manager->flush();
-            return $this->redirectToRoute('/admin');
+            return $this->redirectToRoute('admin');
         }
         return $this->render('admin/create.html.twig', [
             'form' => $form->createView(),
