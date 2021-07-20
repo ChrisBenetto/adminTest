@@ -3,7 +3,10 @@ index:
     controller: App\Controller\BlogController::index
 login:
     path: /login
-    controller: App\Controller\BlogController::login
+    controller: App\Controller\SecurityController::login
+logout:
+    path: /logout
+    controller: App\Controller\SecurityController::logout
 signup:
     path: /signup
     controller: App\Controller\RegistrationController::signup

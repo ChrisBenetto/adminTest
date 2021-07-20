@@ -98,11 +98,14 @@ class User implements UserInterface
 
         return $this;
     }
-    public function getUserIdentifier()
+    public function getUserIdentifier(): ?string
     {
+        return $this->username;
     }
     public function getRoles()
     {
+        $roles[] = 'ROLE_ADMIN';
+        return $roles;
     }
     public function getSalt()
     {

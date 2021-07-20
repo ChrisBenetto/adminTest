@@ -8,7 +8,7 @@
 			{% endblock %}
 		</title>
 		{# Run `composer require symfony/webpack-encore-bundle`
-																								           and uncomment the following Encore helpers to start using Symfony UX #}
+																																												           and uncomment the following Encore helpers to start using Symfony UX #}
 		{% block stylesheets %}
 			{#{{ encore_entry_link_tags('app') }}#}
 			<link rel="stylesheet" href="https://bootswatch.com/5/lumen/bootstrap.min.css">
@@ -32,15 +32,31 @@
 							<a class="nav-link" href="/signup">Inscription</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link" href="/login">Se connecter</a>
+							{% if app.user %}
+								<a class="nav-link" href="/logout">Deconnexion</a>
+							{% else %}
+								<a class="nav-link" href="/login">Se connecter</a>
+							{% endif %}
 						</li>
-						<li class="nav-item">
+					</li>
+					<li class="nav-item">
+						{% if app.user %}
 							<a class="nav-link" href="/admin">Administration</a>
+						{% endif %}
+					</li>
+					{% if app.user %}
+						<li
+							class="nav-item">
+							<!-- Possibilité de mettre page profil par la suite -->
+							<a class="nav-link" href='#'>Connecté en tant que
+								{{ app.user.username }}
+							</p>
 						</li>
-					</div>
+					{% endif %}
+
 				</div>
-			</nav>
-			{% block body %}{% endblock %}
-		</body>
+			</div>
+		</nav>
+		{% block body %}{% endblock %}
 	</body>
-</html>
+</html></body></html>
