@@ -31,7 +31,7 @@ class AdminController extends AbstractController
     }
     /**
      * @Route("/admin/create", name="createNews" , methods={"GET","POST"})
-     * @Route("/admin/{id}/edit", name="editNews", methods={"GET","PUT"})
+     * @Route("/admin/{id}/edit", name="editNews", methods={"GET","PUT" , "POST"})
      */
     public function form(News $news = null, Request $request, EntityManagerInterface $manager): Response
     {
@@ -45,7 +45,7 @@ class AdminController extends AbstractController
             ->add('content', TextareaType::class, ['label' => 'Contenu de l\'actualité'])
             ->add('publicationDate', DateType::class, ['label' => 'Date de publication'])
             ->add('publicationEnding', DateType::class, ['label' => 'Date de fin de publication'])
-            /*->add('file', FileType::class, ['label' => 'Image de news']) */
+            ->add('imageFile', FileType::class, ['label' => 'Image de news'])
             ->add('submit', SubmitType::class, ['label' => 'Envoyez !'])
             ->getForm();
 

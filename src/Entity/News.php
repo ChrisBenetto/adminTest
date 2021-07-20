@@ -2,13 +2,16 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\NewsRepository;
+use Vich\UploaderBundle\Entity\File;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ORM\Entity(repositoryClass=NewsRepository::class)
+ * @Vich\Uploadable
  */
 class News
 {
@@ -18,6 +21,19 @@ class News
      * @ORM\Column(type="integer")
      */
     private $id;
+
+    /**
+     * @var string|null
+     * @ORM\Column(type="string",length=255)
+     */
+    private $filename;
+
+    /**
+     * @var File|null
+     * @Vich\UploadableField(mapping="news_image",fileNameProperty="filename")
+     */
+
+    private $imageFile;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -42,7 +58,7 @@ class News
     /**
      * @ORM\Column(type="date", nullable=true)
      */
-    private $updateAt;
+    private $updated_at;
 
     /**
      * @ORM\Column(type="date")
@@ -125,12 +141,12 @@ class News
 
     public function getUpdateAt(): ?\DateTime
     {
-        return $this->updateAt;
+        return $this->updated_at;
     }
 
-    public function setUpdateAt(?\DateTime $updateAt): self
+    public function setUpdateAt(?\DateTime $updated_at): self
     {
-        $this->updateAt = $updateAt;
+        $this->updated_at = $updated_at;
 
         return $this;
     }
@@ -209,6 +225,50 @@ class News
     public function removeCategory(Category $category): self
     {
         $this->categories->removeElement($category);
+
+        return $this;
+    }
+
+    /**
+     * Get the value of imageFile
+     */
+    public function getImageFile()
+    {
+        return $this->imageFile;
+    }
+
+    /**
+     * Set the value of imageFile
+     *
+     * @return  self
+     */
+    public function setImageFile($imageFile)
+    {
+        $this->imageFile = $imageFile;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of filename
+     *
+     * @return  string|null
+     */
+    public function getFilename()
+    {
+        return $this->filename;
+    }
+
+    /**
+     * Set the value of filename
+     *
+     * @param  string|null  $filename
+     *
+     * @return  self
+     */
+    public function setFilename($filename)
+    {
+        $this->filename = $filename;
 
         return $this;
     }
