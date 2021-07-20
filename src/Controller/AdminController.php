@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\News;
 use Symfony\Component\Form\Form;
 use Doctrine\ORM\EntityManagerInterface;
@@ -12,6 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,10 +40,14 @@ class AdminController extends AbstractController
         if (!$news) {
             $news = new News();
         }
-
+        $repo = $this->getDoctrine()->getRepository(Category::class);
+        $categories = $repo->findAll();
         $form = $this->createFormBuilder($news)
             ->add('title', TextType::class, ['label' => 'Titre de l\'actualité'])
             ->add('slug', TextType::class, ['label' => 'Résumé'])
+            /* ->add('categories', ChoiceType::class, [
+                'choices' => [$categories]
+            ]) */
             ->add('content', TextareaType::class, ['label' => 'Contenu de l\'actualité'])
             ->add('publicationDate', DateType::class, ['label' => 'Date de publication'])
             ->add('publicationEnding', DateType::class, ['label' => 'Date de fin de publication'])
