@@ -18,7 +18,7 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 class BlogController extends AbstractController
 {
     /**
-     *@Route("/" , name="home")
+     * @Route("/" , name="home")
      */
     public function index(): Response
     {
@@ -39,51 +39,6 @@ class BlogController extends AbstractController
         $newsById = $repo->find($id);
         return $this->render('admin/news.html.twig', [
             "news" => $newsById
-        ]);
-    }
-    /**
-     *@Route("/login" , name="login" , methods= {"GET","POST"})
-     */
-    public function login(Request $request): Response
-    {
-        $user = new User();
-
-        $form = $this->createFormBuilder($user)
-            ->add('email', EmailType::class, ['label' => 'Email'])
-            ->add('password', PasswordType::class, ['label' => 'Mot de passe'])
-            ->add('submit', SubmitType::class, ['label' => "S'inscrire !"])
-            ->getForm();
-
-        $form->handleRequest($request);
-        return $this->render('blog/login.html.twig', [
-            'form' => $form->createView()
-        ]);
-    }
-    /**
-     * @Route("/signup" , name="signup" , methods= {"GET","POST"})
-     */
-    public function signup(Request $request, EntityManagerInterface $manager, UserPasswordHasherInterface $passwordHasher): Response
-    {
-        $user = new User();
-
-        $form = $this->createFormBuilder($user)
-            ->add('username', TextType::class, ['label' => "Votre nom d'utilisateur"])
-            ->add('email', EmailType::class, ['label' => 'Email'])
-            ->add('password', PasswordType::class, ['label' => 'Mot de passe'])
-            ->add('submit', SubmitType::class, ['label' => "S'inscrire !"])
-            ->getForm();
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $user->setIsAdmin(false);
-            $manager = $this->getDoctrine()->getManager();
-            $manager->persist($user);
-            $manager->flush();
-            return $this->redirectToRoute('login');
-        }
-        return $this->render('blog/signup.html.twig', [
-            'form' => $form->createView(),
         ]);
     }
 }

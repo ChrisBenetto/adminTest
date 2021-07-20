@@ -6,7 +6,7 @@ login:
     controller: App\Controller\BlogController::login
 signup:
     path: /signup
-    controller: App\Controller\BlogController::signup
+    controller: App\Controller\RegistrationController::signup
 admin:
     path: /admin
     controller: App\Controller\AdminController::homeAdmin
