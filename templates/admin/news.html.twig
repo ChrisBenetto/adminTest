@@ -9,6 +9,9 @@
 			<h1>Article
 				{{ news.title}}
 			</h1>
+			{% for category in categories %}
+				{{ category.title }}
+			{% endfor %}
 			<p>
 				{{ news.content }}
 			</p>

@@ -24,7 +24,7 @@ final class Version20210715161158 extends AbstractMigration
         $this->addSql('CREATE SEQUENCE news_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE picture_id_seq INCREMENT BY 1 MINVALUE 1 START 1');
         $this->addSql('CREATE SEQUENCE "user_id_seq" INCREMENT BY 1 MINVALUE 1 START 1');
-        $this->addSql('CREATE TABLE category (id INT NOT NULL, title VARCHAR(255) NOT NULL, slug VARCHAR(255) DEFAULT NULL, create_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE category (id INT NOT NULL , title VARCHAR(255) NOT NULL, slug VARCHAR(255) DEFAULT NULL, create_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('COMMENT ON COLUMN category.create_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('CREATE TABLE news (id INT NOT NULL, title VARCHAR(255) NOT NULL, slug VARCHAR(255) NOT NULL, content TEXT NOT NULL, create_at DATE NOT NULL, update_at DATE DEFAULT NULL, publication_date DATE NOT NULL, publication_ending DATE NOT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE TABLE news_category (news_id INT NOT NULL, category_id INT NOT NULL, PRIMARY KEY(news_id, category_id))');

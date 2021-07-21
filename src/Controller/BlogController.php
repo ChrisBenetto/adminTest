@@ -2,9 +2,12 @@
 
 namespace App\Controller;
 
+use App\Entity\Category;
 use App\Entity\News;
 use App\Entity\User;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -26,6 +29,7 @@ class BlogController extends AbstractController
         $newsOfDay = $repo->findBy(
             ['publicationDate' => new \DateTime('now')]
         );
+
         return $this->render('blog/home.html.twig', [
             'news' => $newsOfDay
         ]);
@@ -37,8 +41,11 @@ class BlogController extends AbstractController
     {
         $repo = $this->getDoctrine()->getRepository(News::class);
         $newsById = $repo->find($id);
+        $categories = $newsById->getCategories();
+
         return $this->render('admin/news.html.twig', [
-            "news" => $newsById
+            "news" => $newsById,
+            "categories" => $categories
         ]);
     }
 }

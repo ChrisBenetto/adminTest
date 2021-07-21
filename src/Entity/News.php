@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Entity\Category;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\NewsRepository;
 use Vich\UploaderBundle\Entity\File;
