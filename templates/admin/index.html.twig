@@ -9,7 +9,8 @@
 			<div class="example-wrapper">
 				<h1>Gestion des news
 				</h1>
-				<a href="/admin/create" class="btn btn-primary">Créer une actualité</a>
+				<a href="/admin/createNews" class="btn btn-primary">Créer une actualité</a>
+				<a href="/admin/createCategory" class="btn btn-success">Créer une categorie</a>
 			</div>
 			<div class="row">
 				{% for news in news %}
@@ -17,7 +18,7 @@
 					<div class="card col-3 mb-3">
 						<div class="card-body">
 							<h5 class="card-title">{{ news.title }}</h5>
-							<h6 class="card-subtitle text-muted">{{news.slug}}</h6>
+							<h6 class="card-subtitle text-muted">{{news.slug }}</h6>
 						</div>
 						{% if news.filename %}
 

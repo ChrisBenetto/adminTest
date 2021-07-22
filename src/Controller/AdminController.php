@@ -33,7 +33,14 @@ class AdminController extends AbstractController
         ]);
     }
     /**
-     * @Route("/admin/create", name="createNews" , methods={"GET","POST"})
+     * @Route("/admin/createCategory", name="createCategory" , methods={"GET","POST"})
+     */
+    public function category(): Response
+    {
+        return $this->render('admin/createCategory.html.twig');
+    }
+    /**
+     * @Route("/admin/createNews", name="createNews" , methods={"GET","POST"})
      * @Route("/admin/{id}/edit", name="editNews", methods={"GET","PUT" , "POST"})
      */
     public function form(News $news = null, Request $request, EntityManagerInterface $manager): Response
