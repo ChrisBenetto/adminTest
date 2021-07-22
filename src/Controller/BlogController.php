@@ -42,10 +42,26 @@ class BlogController extends AbstractController
         $repo = $this->getDoctrine()->getRepository(News::class);
         $newsById = $repo->find($id);
         $categories = $newsById->getCategories();
+        $pictures = $newsById->getPictures();
 
-        return $this->render('admin/news.html.twig', [
+        return $this->render('blog/news.html.twig', [
             "news" => $newsById,
-            "categories" => $categories
+            "categories" => $categories,
+            "pictures" => $pictures
+        ]);
+    }
+    /**
+     * @Route("/category/{id}" , name="showNewsByCategory",methods={"GET"}, requirements={"id"="\d+"}))
+     */
+    public function showNewsByCategory($id): Response
+    {
+        $repo = $this->getDoctrine()->getRepository(Category::class);
+        $categoryById = $repo->find($id);
+        $news = $categoryById->getNews();
+
+        return $this->render('blog/categoryNews.html.twig', [
+            "news" => $news,
+            "category" => $categoryById
         ]);
     }
 }

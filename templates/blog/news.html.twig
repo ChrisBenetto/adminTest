@@ -7,10 +7,16 @@
 	<div class="container">
 		<div class="example-wrapper">
 			<h1>Article
-				{{ news.title}}
+				{{ news.title }}
 			</h1>
 			{% for category in categories %}
-				{{ category.title }}
+				<a href="/category/{{ category.id}}">
+					<span class="badge bg-primary">{{ category.title }}</span>
+				</a>
+			{% endfor %}
+			<br>
+			{% for picture in pictures %}
+				<img src="/uploads/{{ picture.url }}" class="img-fluid img-thumbnail" alt="">
 			{% endfor %}
 			<p>
 				{{ news.content }}

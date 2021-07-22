@@ -72,7 +72,7 @@ class News
     private $publicationEnding;
 
     /**
-     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="news")
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="news", cascade={"persist"})
      */
     private $pictures;
 

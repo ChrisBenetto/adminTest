@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+	<div class="container">
+		<div class="example-wrapper">
+			<h1>Articles de la categorie
+				{{ category.title }}</h1>
+			<ul>
+				{% for news in news %}
+					<li>
+						<a href="/news/{{ news.id }}">{{news.title}}</a>
+					</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+{% endblock %}
