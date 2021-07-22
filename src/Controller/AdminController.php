@@ -5,21 +5,16 @@ namespace App\Controller;
 use App\Entity\News;
 use App\Entity\Picture;
 use App\Entity\Category;
-use Symfony\Component\Form\Form;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
-use Vich\UploaderBundle\Form\Type\VichFileType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class AdminController extends AbstractController
@@ -37,10 +32,33 @@ class AdminController extends AbstractController
     }
     /**
      * @Route("/admin/createCategory", name="createCategory" , methods={"GET","POST"})
+     * @Route("/admin/{id}/editCategory", name="editCategory", methods={"GET","PUT" , "POST"})
      */
-    public function category(): Response
+    public function formCategory(Category $category = null, Request $request, EntityManagerInterface $manager): Response
     {
-        return $this->render('admin/createCategory.html.twig');
+        if (!$category) {
+            $category = new Category();
+        }
+        $form = $this->createFormBuilder($category)
+            ->add('title', TextType::class, ['label' => 'Titre de la catégorie'])
+            ->add('slug', TextType::class, ['label' => 'Tag'])
+            ->add('submit', SubmitType::class, ['label' => 'Envoyez !'])
+            ->getForm();
+
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (!$category->getId()) {
+                $category->setCreateAt(new \DateTime());
+            }
+            $manager = $this->getDoctrine()->getManager();
+            $manager->persist($category);
+            $manager->flush();
+            return $this->redirectToRoute('admin');
+        }
+        return $this->render('admin/createCategory.html.twig', [
+            'form' => $form->createView(),
+            'editMode' => $category->getId() !== null
+        ]);
     }
     /**
      * @Route("/admin/createNews", name="createNews" , methods={"GET","POST"})

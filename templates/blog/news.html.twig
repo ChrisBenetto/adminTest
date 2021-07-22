@@ -11,7 +11,7 @@
 			</h1>
 			{% for category in categories %}
 				<a href="/category/{{ category.id}}">
-					<span class="badge bg-primary">{{ category.title }}</span>
+					<span class="badge bg-primary">{{ category.slug }}</span>
 				</a>
 			{% endfor %}
 			<br>

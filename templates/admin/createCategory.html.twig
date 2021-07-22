@@ -1,9 +1,20 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}
+	{% if (editMode) %}
+		Modification d'une catégorie
+	{% else %}
+		Création d'une catégorie
+	{% endif %}
+{% endblock %}
 
-	Création d'une categorie
-{% endblock %}
 {% block body %}
-	<h1>Création d'une categorie</h1>
-{% endblock %}
+	<div class="container">
+		{% if (editMode) %}
+			<h1>Modification d'une catégorie</h1>
+		{% else %}
+			<h1>Création d'une catégorie</h1>
+		{% endif %}
+		{{ form(form) }}
+		</div>
+	{% endblock %}
