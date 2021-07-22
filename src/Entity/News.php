@@ -213,8 +213,11 @@ class News
     {
         return $this->categories;
     }
+    /**
+     *  @param \Doctrine\Common\Collection\ArrayCollection $category
+     */
 
-    public function addCategory(Category $category): self
+    public function addCategory($category): self
     {
         if (!$this->categories->contains($category)) {
             $this->categories[] = $category;
