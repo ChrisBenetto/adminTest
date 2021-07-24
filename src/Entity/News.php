@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Entity\Category;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\NewsRepository;
