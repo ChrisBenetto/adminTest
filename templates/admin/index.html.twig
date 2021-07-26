@@ -1,13 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello AdminController!
+{% block title %}Hello Admin!
+{% endblock %}
+{% block stylesheets %}
+	{{ parent() }}
+	{{ encore_entry_link_tags('homeAdmin') }}
+{% endblock %}
+{% block javascripts %}
+
+	{{ parent() }}
+	{{ encore_entry_script_tags('homeAdmin') }}
+
 {% endblock %}
 
 {% block body %}
 	<div class="container">
 		<div class="row">
 			<div class="example-wrapper">
-				<h1>Gestion des news
+				<h1 class="test-css">Gestion des news
 				</h1>
 				<a href="/admin/createNews" class="btn btn-primary mb-2">Créer une actualité</a>
 				<a href="/admin/createCategory" class="btn btn-success mb-2">Créer une categorie</a>
